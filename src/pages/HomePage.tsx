@@ -8,11 +8,12 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useEffect } from "react";
+import { IPrize } from "../data/interfaces";
 
 import { useGame } from "../hooks/useGame";
 import { useGetTotalCorrect } from "../hooks/useGetTotalCorrect";
 import { useResult } from "../hooks/useResult";
-import { util } from "../utils/util";
+import { util } from "../utils/Util";
 
 export const HomePage = () => {
   const {
@@ -40,7 +41,10 @@ export const HomePage = () => {
         dezenas: number[];
         concurso: number;
         data: string;
+        premiacoes: IPrize[];
       };
+
+      console.log(data);
 
       const numberArray = data?.dezenas?.map((string) => +string);
 
@@ -61,7 +65,7 @@ export const HomePage = () => {
       fontFamily="mono"
       fontSize="sm"
     >
-      <VStack width="container.sm" p="4" spacing="8">
+      <VStack width="container.sm" p="4" spacing="16">
         <VStack w="full" spacing="0">
           <Text
             fontSize="3xl"
@@ -104,7 +108,7 @@ export const HomePage = () => {
 
           {display && (
             <>
-              <Text>Adicionar Manualmente</Text>
+              <Text>Adicionar Números do Concurso Manualmente</Text>
               <HStack spacing="8" w="full" justify="space-between">
                 <Input
                   type="number"
@@ -124,7 +128,7 @@ export const HomePage = () => {
 
         {result.length === 6 && (
           <>
-            <VStack w="full" align="flex-start">
+            <VStack pt="8" w="full" align="flex-start">
               <Text>Números Apostados</Text>
 
               <HStack spacing="8" w="full" justify="space-between">
@@ -153,14 +157,26 @@ export const HomePage = () => {
 
               <VStack w="full" align="center">
                 <Text>Números Corretos</Text>
+
                 <Text
-                  fontSize="3xl"
-                  fontWeight="bold"
+                  fontSize="6xl"
+                  fontWeight="black"
                   color="green.300"
                   textAlign="center"
                 >
                   {gamesCorrect}
                 </Text>
+
+                {gamesCorrect === 4 && (
+                  <Text
+                    fontSize="3xl"
+                    fontWeight="black"
+                    color="green.300"
+                    textAlign="center"
+                  >
+                    Parabéns, ganhou na quadra!
+                  </Text>
+                )}
               </VStack>
             </VStack>
           </>

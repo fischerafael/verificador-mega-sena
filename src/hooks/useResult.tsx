@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IPrize } from "../data/interfaces";
 
 export const useResult = () => {
   const [result, setResult] = useState<number[]>([]);
@@ -6,6 +7,7 @@ export const useResult = () => {
   const [concourse, setConcourse] = useState("");
   const [date, setDate] = useState("");
   const [display, setDisplay] = useState(false);
+  const [prizes, setPrizes] = useState([] as IPrize[]);
 
   return {
     result,
