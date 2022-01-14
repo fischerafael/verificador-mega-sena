@@ -1,28 +1,39 @@
 import { Button, Flex, HStack, Input, Text, VStack } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 import { useGame } from "../hooks/useGame";
+import { useGetTotalCorrect } from "../hooks/useGetTotalCorrect";
 import { useResult } from "../hooks/useResult";
 import { util } from "../utils/util";
 
 export const HomePage = () => {
   const { result, setResult, resultNumber, setResultNumber } = useResult();
   const { game, setGame, gameNumber, setGameNumber } = useGame();
-
-  const onRemove = (
-    number: number,
-    array: number[],
-    setArray: (e: any) => void
-  ) => {
-    const filteredResult = array.filter((num) => num !== number);
-    setArray(filteredResult);
-  };
-
-  console.log(game);
+  const { gamesCorrect } = useGetTotalCorrect(game, result);
 
   return (
-    <Flex w="full" bg="gray.50" minH="100vh" justify="center" py="8">
-      <VStack width="container.sm">
-        <Text fontSize="xl">Verificador da Mega-Sena</Text>
+    <Flex
+      w="full"
+      bg="gray.800"
+      color="gray.50"
+      minH="100vh"
+      justify="center"
+      py="8"
+      fontFamily="mono"
+      fontSize="sm"
+    >
+      <VStack width="container.sm" p="4" spacing="8">
+        <VStack w="full" spacing="0">
+          <Text
+            fontSize="3xl"
+            fontWeight="bold"
+            color="yellow.500"
+            textAlign="center"
+          >
+            Verificador da Mega-Sena
+          </Text>
+          <Text>Confira quantos números você acertou!</Text>
+        </VStack>
 
         <VStack w="full" align="flex-start">
           <Text>Números Sorteados</Text>
@@ -33,56 +44,88 @@ export const HomePage = () => {
               value={resultNumber}
               onChange={(e) => setResultNumber(+e.target.value)}
             />
-            <Button
+            <CustomButton
               onClick={() =>
                 util.onAdd(result, resultNumber, setResult, setResultNumber)
               }
-            >
-              Adicionar
-            </Button>
+              label="Adicionar"
+            />
+          </HStack>
+
+          <HStack spacing="4">
+            {result?.map((number) => (
+              <BallComponent
+                key={number}
+                number={number}
+                onClick={() => util.onRemove(number, result, setResult)}
+              />
+            ))}
           </HStack>
         </VStack>
 
-        <HStack spacing="4">
-          {result?.map((number) => (
-            <BallComponent
-              key={number}
-              number={number}
-              onClick={() => util.onRemove(number, result, setResult)}
-            />
-          ))}
-        </HStack>
+        {result.length === 6 && (
+          <>
+            <VStack w="full" align="flex-start">
+              <Text>Números Apostados</Text>
 
-        <VStack w="full" align="flex-start">
-          <Text>Números Apostados</Text>
+              <HStack spacing="8" w="full" justify="space-between">
+                <Input
+                  type="number"
+                  value={gameNumber}
+                  onChange={(e) => setGameNumber(+e.target.value)}
+                />
+                <CustomButton
+                  onClick={() =>
+                    util.onAdd(game, gameNumber, setGame, setGameNumber)
+                  }
+                  label="Adicionar"
+                />
+              </HStack>
 
-          <HStack spacing="8" w="full" justify="space-between">
-            <Input
-              type="number"
-              value={gameNumber}
-              onChange={(e) => setGameNumber(+e.target.value)}
-            />
-            <Button
-              onClick={() =>
-                util.onAdd(game, gameNumber, setGame, setGameNumber)
-              }
-            >
-              Adicionar
-            </Button>
-          </HStack>
-        </VStack>
+              <HStack spacing="4">
+                {game?.map((num) => (
+                  <BallComponent
+                    key={num}
+                    number={num}
+                    onClick={() => util.onRemove(num, game, setGame)}
+                  />
+                ))}
+              </HStack>
 
-        <HStack spacing="4">
-          {game?.map((num) => (
-            <BallComponent
-              key={num}
-              number={num}
-              onClick={() => util.onRemove(num, game, setGame)}
-            />
-          ))}
-        </HStack>
+              <VStack w="full" align="center">
+                <Text>Números Corretos</Text>
+                <Text
+                  fontSize="3xl"
+                  fontWeight="bold"
+                  color="yellow.500"
+                  textAlign="center"
+                >
+                  {gamesCorrect}
+                </Text>
+              </VStack>
+            </VStack>
+          </>
+        )}
       </VStack>
     </Flex>
+  );
+};
+
+const CustomButton = ({
+  label,
+  onClick,
+}: {
+  label: string;
+  onClick: (e: any) => void;
+}) => {
+  return (
+    <Button
+      onClick={onClick}
+      bg="yellow.500"
+      _hover={{ background: "yellow.700" }}
+    >
+      {label}
+    </Button>
   );
 };
 
@@ -104,13 +147,15 @@ const BallComponent = ({
       <Flex
         justify="center"
         align="center"
-        bg="white"
+        bg="gray.900"
         h="10"
         w="10"
         shadow="md"
         borderRadius="full"
       >
-        <Text>{number}</Text>
+        <Text fontWeight="bold" color="yellow.500">
+          {number}
+        </Text>
       </Flex>
     </HStack>
   );
