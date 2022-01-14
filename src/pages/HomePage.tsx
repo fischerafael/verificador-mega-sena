@@ -1,24 +1,12 @@
 import { Button, Flex, HStack, Input, Text, VStack } from "@chakra-ui/react";
-import { useState } from "react";
+
+import { useGame } from "../hooks/useGame";
+import { useResult } from "../hooks/useResult";
+import { util } from "../utils/util";
 
 export const HomePage = () => {
-  const [result, setResult] = useState<number[]>([]);
-  const [resultNumber, setResultNumber] = useState<number>(0);
-
-  const onAdd = (
-    array: number[],
-    number: number,
-    setArray: (e: any) => void,
-    setNumber: (e: any) => void
-  ) => {
-    if (!number) return;
-    if (array.includes(number)) return;
-    if (number <= 0) return;
-    if (number > 60) return;
-    if (array.length >= 6) return;
-    setArray([...array, number]);
-    setNumber(0);
-  };
+  const { result, setResult, resultNumber, setResultNumber } = useResult();
+  const { game, setGame, gameNumber, setGameNumber } = useGame();
 
   const onRemove = (
     number: number,
@@ -28,9 +16,6 @@ export const HomePage = () => {
     const filteredResult = array.filter((num) => num !== number);
     setArray(filteredResult);
   };
-
-  const [game, setGame] = useState<number[]>([]);
-  const [gameNumber, setGameNumber] = useState<number>(0);
 
   console.log(game);
 
@@ -50,7 +35,7 @@ export const HomePage = () => {
             />
             <Button
               onClick={() =>
-                onAdd(result, resultNumber, setResult, setResultNumber)
+                util.onAdd(result, resultNumber, setResult, setResultNumber)
               }
             >
               Adicionar
@@ -63,7 +48,7 @@ export const HomePage = () => {
             <BallComponent
               key={number}
               number={number}
-              onClick={() => onRemove(number, result, setResult)}
+              onClick={() => util.onRemove(number, result, setResult)}
             />
           ))}
         </HStack>
@@ -78,7 +63,9 @@ export const HomePage = () => {
               onChange={(e) => setGameNumber(+e.target.value)}
             />
             <Button
-              onClick={() => onAdd(game, gameNumber, setGame, setGameNumber)}
+              onClick={() =>
+                util.onAdd(game, gameNumber, setGame, setGameNumber)
+              }
             >
               Adicionar
             </Button>
@@ -90,7 +77,7 @@ export const HomePage = () => {
             <BallComponent
               key={num}
               number={num}
-              onClick={() => onRemove(num, game, setGame)}
+              onClick={() => util.onRemove(num, game, setGame)}
             />
           ))}
         </HStack>
