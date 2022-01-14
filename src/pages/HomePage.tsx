@@ -27,9 +27,13 @@ export const HomePage = () => {
     setDate,
     display,
     setDisplay,
+    prizes,
+    setPrizes,
   } = useResult();
   const { game, setGame, gameNumber, setGameNumber } = useGame();
   const { gamesCorrect } = useGetTotalCorrect(game, result);
+
+  console.log(prizes);
 
   useEffect(() => {
     if (display) return;
@@ -37,6 +41,7 @@ export const HomePage = () => {
       const res = await fetch(
         "https://loteriascaixa-api.herokuapp.com/api/mega-sena/latest"
       );
+
       const data = (await res.json()) as {
         dezenas: number[];
         concurso: number;
@@ -44,13 +49,19 @@ export const HomePage = () => {
         premiacoes: IPrize[];
       };
 
-      console.log(data);
-
       const numberArray = data?.dezenas?.map((string) => +string);
+      const quadra = data.premiacoes.find(
+        (premio) => premio.acertos === "Quadra"
+      );
+      const quina = data.premiacoes.find(
+        (premio) => premio.acertos === "Quina"
+      );
+      const sena = data.premiacoes.find((premio) => premio.acertos === "Sena");
 
       setResult(numberArray);
       setConcourse(data?.concurso.toString());
       setDate(data?.data);
+      setPrizes({ quadra, quina, sena });
     })();
   }, [display]);
 
@@ -174,7 +185,29 @@ export const HomePage = () => {
                     color="green.300"
                     textAlign="center"
                   >
-                    Parabéns, ganhou na quadra!
+                    Parabéns, ganhou {`R$ ${prizes.quadra?.premio}`} na quadra!
+                  </Text>
+                )}
+
+                {gamesCorrect === 5 && (
+                  <Text
+                    fontSize="3xl"
+                    fontWeight="black"
+                    color="green.300"
+                    textAlign="center"
+                  >
+                    Parabéns, ganhou {`R$ ${prizes.quina?.premio}`} na quadra!
+                  </Text>
+                )}
+
+                {gamesCorrect === 6 && (
+                  <Text
+                    fontSize="3xl"
+                    fontWeight="black"
+                    color="green.300"
+                    textAlign="center"
+                  >
+                    Parabéns, ganhou {`R$ ${prizes.sena?.premio}`} na quadra!
                   </Text>
                 )}
               </VStack>

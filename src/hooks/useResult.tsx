@@ -7,7 +7,13 @@ export const useResult = () => {
   const [concourse, setConcourse] = useState("");
   const [date, setDate] = useState("");
   const [display, setDisplay] = useState(false);
-  const [prizes, setPrizes] = useState([] as IPrize[]);
+  const [prizes, setPrizes] = useState(
+    {} as {
+      quadra: IPrize | undefined;
+      quina: IPrize | undefined;
+      sena: IPrize | undefined;
+    }
+  );
 
   return {
     result,
@@ -20,5 +26,7 @@ export const useResult = () => {
     setDate,
     display,
     setDisplay,
+    prizes,
+    setPrizes,
   };
 };
