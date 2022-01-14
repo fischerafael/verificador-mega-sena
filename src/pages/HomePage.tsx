@@ -1,5 +1,4 @@
 import { Button, Flex, HStack, Input, Text, VStack } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
 
 import { useGame } from "../hooks/useGame";
 import { useGetTotalCorrect } from "../hooks/useGetTotalCorrect";
@@ -27,7 +26,7 @@ export const HomePage = () => {
           <Text
             fontSize="3xl"
             fontWeight="bold"
-            color="yellow.500"
+            color="green.300"
             textAlign="center"
           >
             Verificador da Mega-Sena
@@ -97,7 +96,7 @@ export const HomePage = () => {
                 <Text
                   fontSize="3xl"
                   fontWeight="bold"
-                  color="yellow.500"
+                  color="green.300"
                   textAlign="center"
                 >
                   {gamesCorrect}
@@ -121,8 +120,8 @@ const CustomButton = ({
   return (
     <Button
       onClick={onClick}
-      bg="yellow.500"
-      _hover={{ background: "yellow.700" }}
+      bg="green.300"
+      _hover={{ background: "green.700" }}
     >
       {label}
     </Button>
@@ -153,7 +152,7 @@ const BallComponent = ({
         shadow="md"
         borderRadius="full"
       >
-        <Text fontWeight="bold" color="yellow.500">
+        <Text fontWeight="bold" color="green.300">
           {number}
         </Text>
       </Flex>

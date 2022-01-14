@@ -1,5 +1,5 @@
-class Util {
-  onAdd = (
+const util = {
+  onAdd: (
     array: number[],
     number: number,
     setArray: (e: any) => void,
@@ -12,12 +12,12 @@ class Util {
     if (array.length >= 6) return;
     setArray([...array, number]);
     setNumber(0);
-  };
+  },
 
-  onRemove = (number: number, array: number[], setArray: (e: any) => void) => {
+  onRemove: (number: number, array: number[], setArray: (e: any) => void) => {
     const filteredResult = array.filter((num) => num !== number);
     setArray(filteredResult);
-  };
-}
+  },
+};
 
-export const util = new Util();
+export { util };
