@@ -5,21 +5,34 @@ export const HomePage = () => {
   const [result, setResult] = useState<number[]>([]);
   const [resultNumber, setResultNumber] = useState<number>(0);
 
-  const onAdd = () => {
-    if (!resultNumber) return;
-    if (result.includes(resultNumber)) return;
-    if (resultNumber <= 0) return;
-    if (resultNumber > 60) return;
-    setResult([...result, resultNumber]);
-    setResultNumber(0);
+  const onAdd = (
+    array: number[],
+    number: number,
+    setArray: (e: any) => void,
+    setNumber: (e: any) => void
+  ) => {
+    if (!number) return;
+    if (array.includes(number)) return;
+    if (number <= 0) return;
+    if (number > 60) return;
+    if (array.length >= 6) return;
+    setArray([...array, number]);
+    setNumber(0);
   };
 
-  const onRemove = (number: number) => {
-    const filteredResult = result.filter((num) => num !== number);
-    setResult(filteredResult);
+  const onRemove = (
+    number: number,
+    array: number[],
+    setArray: (e: any) => void
+  ) => {
+    const filteredResult = array.filter((num) => num !== number);
+    setArray(filteredResult);
   };
 
-  console.log(resultNumber, result);
+  const [game, setGame] = useState<number[]>([]);
+  const [gameNumber, setGameNumber] = useState<number>(0);
+
+  console.log(game);
 
   return (
     <Flex w="full" bg="gray.50" minH="100vh" justify="center" py="8">
@@ -35,7 +48,13 @@ export const HomePage = () => {
               value={resultNumber}
               onChange={(e) => setResultNumber(+e.target.value)}
             />
-            <Button onClick={onAdd}>Adicionar</Button>
+            <Button
+              onClick={() =>
+                onAdd(result, resultNumber, setResult, setResultNumber)
+              }
+            >
+              Adicionar
+            </Button>
           </HStack>
         </VStack>
 
@@ -44,7 +63,34 @@ export const HomePage = () => {
             <BallComponent
               key={number}
               number={number}
-              onClick={() => onRemove(number)}
+              onClick={() => onRemove(number, result, setResult)}
+            />
+          ))}
+        </HStack>
+
+        <VStack w="full" align="flex-start">
+          <Text>Números Apostados</Text>
+
+          <HStack spacing="8" w="full" justify="space-between">
+            <Input
+              type="number"
+              value={gameNumber}
+              onChange={(e) => setGameNumber(+e.target.value)}
+            />
+            <Button
+              onClick={() => onAdd(game, gameNumber, setGame, setGameNumber)}
+            >
+              Adicionar
+            </Button>
+          </HStack>
+        </VStack>
+
+        <HStack spacing="4">
+          {game?.map((num) => (
+            <BallComponent
+              key={num}
+              number={num}
+              onClick={() => onRemove(num, game, setGame)}
             />
           ))}
         </HStack>
