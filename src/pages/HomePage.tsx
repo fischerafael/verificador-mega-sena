@@ -104,19 +104,6 @@ export const HomePage = () => {
             </VStack>
           </HStack>
 
-          <HStack spacing="4" justify="center" w="full">
-            {result?.map((number) => (
-              <BallComponent
-                key={number}
-                number={number}
-                onClick={() => {
-                  if (!display) return;
-                  util.onRemove(number, result, setResult);
-                }}
-              />
-            ))}
-          </HStack>
-
           {display && (
             <>
               <Text>Adicionar Números do Concurso Manualmente</Text>
@@ -135,6 +122,19 @@ export const HomePage = () => {
               </HStack>
             </>
           )}
+
+          <HStack spacing="4" justify="center" w="full">
+            {result?.map((number) => (
+              <BallComponent
+                key={number}
+                number={number}
+                onClick={() => {
+                  if (!display) return;
+                  util.onRemove(number, result, setResult);
+                }}
+              />
+            ))}
+          </HStack>
         </VStack>
 
         {result.length === 6 && (
