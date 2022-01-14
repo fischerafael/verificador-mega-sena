@@ -7,6 +7,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ChakraProvider>
       <Head>
         <link rel="shortcut icon" href="/megasena.png" />
+        <title>Verificador Mega-Sena</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Component {...pageProps} />
     </ChakraProvider>
