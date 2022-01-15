@@ -1,4 +1,4 @@
-![image 12](https://user-images.githubusercontent.com/47259718/149630906-d1040e13-2977-4bc9-9950-245f64b78fa9.png)
+https://s3.us-west-2.amazonaws.com/secure.notion-static.com/76dd7b17-b4ee-4b3d-946d-7f004754f3e1/image_12.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220115%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20220115T172024Z&X-Amz-Expires=86400&X-Amz-Signature=fa1eda1d6a25a085a34e553c51b18465dee7c247149ebdde57230b2450469dcb&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22image%252012.png%22&x-id=GetObject
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
